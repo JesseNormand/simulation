@@ -41,7 +41,7 @@ ui <- fluidPage(
          ),
          
   column(5,
-  plotOutput(outputId = "plot")
+  plotOutput(outputId = "scatterplot")
   ),
   
   ui <- fluidPage(
@@ -80,10 +80,19 @@ server <- function(input, output, session) {
      paste("Percentage risk of running in the red: ", x)
      
    })
+   
+   output$scatterplot <- renderPlot({
+     ggplot(dfInput(), aes( x = profit, y = revenue, colour = profit)) + 
+       geom_point()
+     
+   })
 
    output$datatable <- renderTable({dfInput()})
-     
-  }
+   
+   }
+
+  
+
 
 
 #Create a shiny appp object -------------------------------------------------
