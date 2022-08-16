@@ -12,7 +12,6 @@ ui <- fluidPage(
   titlePanel("Profit Loss Simulation"),
   fluidRow(
     column(4,
-           
            sliderInput(inputId = "trials",
                   label = "Select the number of trials to run",
                   min = 500,
@@ -41,7 +40,7 @@ ui <- fluidPage(
          ),
          
   column(5,
-  plotOutput(outputId = "scatterplot")
+  plotOutput(outputId = "plot")
   ),
   
   ui <- fluidPage(
@@ -81,9 +80,11 @@ server <- function(input, output, session) {
      
    })
    
-   output$scatterplot <- renderPlot({
-     ggplot(dfInput(), aes( x = profit, y = revenue, colour = profit)) + 
-       geom_point()
+   output$plot <- renderPlot({
+     ggplot(dfInput(), aes(x = revenue, y = profit)) +
+       geom_bar(stat="identity", color="gray", position=position_dodge())+
+       theme_minimal()
+    
      
    })
 
