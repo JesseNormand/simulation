@@ -69,11 +69,18 @@ server <- function(input, output, session) {
    dfInput <- reactive({revenue = runif(input$trials,input$min, input$max)
     fixed_cost = runif(input$trials,52000,57000)
     variable_cost = runif(input$trials,100000,105000)
-    results <- data.frame(revenue, fixed_cost, variable_cost)
-    
+    results <- data.frame(revenue, fixed_cost, variable_cost) %>% 
+    mutate(profit = revenue - fixed_cost - variable_cost)
     
     })
-  
+   
+   output$text <- renderText({
+   
+     x <- sum(dfInput()$profit < 0) / input$trials * 100
+     paste("Percentage risk of running in the red: ", x)
+     
+   })
+
    output$datatable <- renderTable({dfInput()})
      
   }
