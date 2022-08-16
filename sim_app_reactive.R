@@ -10,55 +10,46 @@ library(ggplot2)
 ui <- fluidPage(
 
   titlePanel("Profit Loss Simulation"),
-  fluidRow(
-    column(4,
-           sliderInput(inputId = "trials",
+  sidebarLayout(
+    sidebarPanel(
+      
+      
+      sliderInput(inputId = "trials",
                   label = "Select the number of trials to run",
                   min = 500,
                   max = 1000,
                   value = 500),
-           
-           sliderInput(inputId = "min",
-              label = "Select mininmal expected revenue",
-              min = 100000,
-              max = 300000,
-              value = 100000),
-           
-           sliderInput(inputId = "max",
-              label = "Select maximum expected revenue",
-              min = 100000,
-              max = 300000,
-              value = 185000),
-           
-           textOutput(outputId = "text")
-           
-           ),
+      
+      sliderInput(inputId = "min",
+                  label = "Select mininmal expected revenue",
+                  min = 100000,
+                  max = 300000,
+                  value = 100000),
+      
+      sliderInput(inputId = "max",
+                  label = "Select maximum expected revenue",
+                  min = 100000,
+                  max = 300000,
+                  value = 185000),
+      
+      textOutput(outputId = "text")
   
-  column(3,
-         tableOutput(outputId = "datatable")
-         
-         ),
-         
-  column(5,
-  plotOutput(outputId = "plot")
-  ),
+),
+
+
+mainPanel(
   
-  ui <- fluidPage(
-    fluidRow(
-      column(width = 6, offset = 1,
+  tabsetPanel(type = "tabs",
+              tabPanel("Profit Plot", plotOutput("plot")),
+              tabPanel("Data Table", tableOutput("datatable"))
              
-      )
-    )
-  )
-  
-  
+              
   )
 )
+)
+)
 
-
-       
-
-
+              
 #Define server -------------------------------------------------------------
 
 server <- function(input, output, session) {
